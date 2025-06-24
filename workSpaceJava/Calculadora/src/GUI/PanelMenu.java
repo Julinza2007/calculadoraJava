@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.*;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -15,10 +16,31 @@ import java.awt.event.ActionListener;
 
 public class PanelMenu extends JPanel {
 
+//	private JPanel operacionesBasicas;
+//	private JPanel vectores;
+//	private JPanel matrices;
+//	private JPanel ecuaciones;
+	
+    private JPanel contenedorDeCartas;
+	
 	    public PanelMenu() {
+	    	setLayout(new BorderLayout());
+	 	    setBackground(new Color(255, 0, 0));
+	 	    
+	 	   
+	        contenedorDeCartas = new JPanel();
+	        
+	        OperacionesBasicas operacionesBasicas = new OperacionesBasicas();
+	        Vectores vectores = new Vectores();
+	        Matrices matrices = new Matrices();
+	        Ecuaciones ecuaciones = new Ecuaciones();
 	    	
- 	    setLayout(new BorderLayout());
- 	    setBackground(new Color(255, 0, 0));
+	        contenedorDeCartas.add(operacionesBasicas, "operacionesBasicas");
+	        contenedorDeCartas.add(vectores, "vectores");
+	        contenedorDeCartas.add(matrices, "matrices");
+	        contenedorDeCartas.add(ecuaciones, "ecuaciones");
+	    	
+ 	    
     	
     	
     	JLabel titulo = new JLabel("Calculadora G3L");
@@ -70,32 +92,38 @@ public class PanelMenu extends JPanel {
 
         // Agregar botones al centro
         panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
-        add(panelBotones, BorderLayout.CENTER);		
+        
+        add(panelBotones, BorderLayout.CENTER);        
+        add(contenedorDeCartas, BorderLayout.CENTER);
 		
-		btnEj1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnEj1.setText("HOLA MUNDO");
-			}
-		});
-		
-		btnEj2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnEj2.setText("HOLA MUNDO");
-			}
-		});
-		
-		btnEj3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnEj3.setText("HOLA MUNDO");
-			}
-		});
-		
-		
-		btnEj4.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				btnEj4.setText("HOLA MUNDO");
-			}
-		});
+        btnEj1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	contenedorDeCartas.setVisible(true);
+                cardLayout.show(contenedorDeCartas, "operacionesBasicas");
+            }
+        });
+
+        btnEj2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	contenedorDeCartas.setVisible(true);
+                cardLayout.show(contenedorDeCartas, "vectores");
+            }
+        });
+
+        btnEj3.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	contenedorDeCartas.setVisible(true);
+                cardLayout.show(contenedorDeCartas, "matrices");
+            }
+        });
+
+        btnEj4.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	contenedorDeCartas.setVisible(true);
+                cardLayout.show(contenedorDeCartas, "ecuaciones");
+            }
+        });
+
 		
 		
     }
