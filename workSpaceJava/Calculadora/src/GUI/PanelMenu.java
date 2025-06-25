@@ -21,14 +21,18 @@ public class PanelMenu extends JPanel {
 //	private JPanel matrices;
 //	private JPanel ecuaciones;
 	
+	private CardLayout cardLayout;
     private JPanel contenedorDeCartas;
 	
 	    public PanelMenu() {
 	    	setLayout(new BorderLayout());
 	 	    setBackground(new Color(255, 0, 0));
 	 	    
-	 	   
+	 	   cardLayout = new CardLayout();
+
 	        contenedorDeCartas = new JPanel();
+	        contenedorDeCartas = new JPanel(cardLayout);
+
 	        
 	        OperacionesBasicas operacionesBasicas = new OperacionesBasicas();
 	        Vectores vectores = new Vectores();
@@ -93,13 +97,31 @@ public class PanelMenu extends JPanel {
         // Agregar botones al centro
         panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
         
+        
+        
         add(panelBotones, BorderLayout.CENTER);        
         add(contenedorDeCartas, BorderLayout.CENTER);
+        
+        JPanel panelCentral = new JPanel(new BorderLayout());
+        panelCentral.setOpaque(false); // Para mantener fondo rojo si querés
+
+        panelCentral.add(panelBotones, BorderLayout.NORTH);
+        panelCentral.add(contenedorDeCartas, BorderLayout.CENTER);
+
+        add(panelCentral, BorderLayout.CENTER);
+        
+        contenedorDeCartas.setVisible(false);
+
+
+        
+        
 		
         btnEj1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	contenedorDeCartas.setVisible(true);
                 cardLayout.show(contenedorDeCartas, "operacionesBasicas");
+                panelBotones.setVisible(false);
+                titulo.setVisible(false);
             }
         });
 
@@ -107,6 +129,8 @@ public class PanelMenu extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	contenedorDeCartas.setVisible(true);
                 cardLayout.show(contenedorDeCartas, "vectores");
+                panelBotones.setVisible(false);
+                titulo.setVisible(false);            
             }
         });
 
@@ -114,6 +138,8 @@ public class PanelMenu extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	contenedorDeCartas.setVisible(true);
                 cardLayout.show(contenedorDeCartas, "matrices");
+                panelBotones.setVisible(false);
+                titulo.setVisible(false);
             }
         });
 
@@ -121,6 +147,8 @@ public class PanelMenu extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	contenedorDeCartas.setVisible(true);
                 cardLayout.show(contenedorDeCartas, "ecuaciones");
+                panelBotones.setVisible(false);
+                titulo.setVisible(false);
             }
         });
 
