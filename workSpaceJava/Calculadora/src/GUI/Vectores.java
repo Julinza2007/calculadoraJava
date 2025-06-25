@@ -1,5 +1,7 @@
 package GUI;
 
+import java.awt.CardLayout;
+
 import javax.swing.JPanel;
 
 public class Vectores extends JPanel {
@@ -9,7 +11,7 @@ public class Vectores extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Vectores() {
+	public Vectores(CardLayout cardLayout, JPanel contenedorDeCartas) {
 
 	}
 

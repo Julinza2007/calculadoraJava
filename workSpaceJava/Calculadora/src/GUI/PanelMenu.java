@@ -8,19 +8,12 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 
-import javax.swing.border.EmptyBorder;
 import java.awt.Font;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PanelMenu extends JPanel {
 
-//	private JPanel operacionesBasicas;
-//	private JPanel vectores;
-//	private JPanel matrices;
-//	private JPanel ecuaciones;
-	
 	private CardLayout cardLayout;
     private JPanel contenedorDeCartas;
 	
@@ -34,10 +27,11 @@ public class PanelMenu extends JPanel {
 	        contenedorDeCartas = new JPanel(cardLayout);
 
 	        
-	        OperacionesBasicas operacionesBasicas = new OperacionesBasicas();
-	        Vectores vectores = new Vectores();
-	        Matrices matrices = new Matrices();
-	        Ecuaciones ecuaciones = new Ecuaciones();
+	        OperacionesBasicas operacionesBasicas = new OperacionesBasicas(cardLayout, contenedorDeCartas);
+	        Vectores vectores = new Vectores(cardLayout, contenedorDeCartas);
+	        Matrices matrices = new Matrices(cardLayout, contenedorDeCartas);
+	        Ecuaciones ecuaciones = new Ecuaciones(cardLayout, contenedorDeCartas);
+	        
 	    	
 	        contenedorDeCartas.add(operacionesBasicas, "operacionesBasicas");
 	        contenedorDeCartas.add(vectores, "vectores");

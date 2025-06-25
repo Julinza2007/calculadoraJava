@@ -1,5 +1,7 @@
 package GUI;
 
+import java.awt.CardLayout;
+
 import javax.swing.JPanel;
 
 public class Matrices extends JPanel {
@@ -9,7 +11,7 @@ public class Matrices extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public Matrices() {
+	public Matrices(CardLayout cardLayout, JPanel contenedorDeCartas) {
 
 	}
 
