@@ -27,16 +27,10 @@ public class PanelMenu extends JPanel {
 	        contenedorDeCartas = new JPanel(cardLayout);
 
 	        
-	        OperacionesBasicas operacionesBasicas = new OperacionesBasicas(cardLayout, contenedorDeCartas);
-	        Vectores vectores = new Vectores(cardLayout, contenedorDeCartas);
-	        Matrices matrices = new Matrices(cardLayout, contenedorDeCartas);
-	        Ecuaciones ecuaciones = new Ecuaciones(cardLayout, contenedorDeCartas);
+	        
 	        
 	    	
-	        contenedorDeCartas.add(operacionesBasicas, "operacionesBasicas");
-	        contenedorDeCartas.add(vectores, "vectores");
-	        contenedorDeCartas.add(matrices, "matrices");
-	        contenedorDeCartas.add(ecuaciones, "ecuaciones");
+	        
 	    	
  	    
     	
@@ -91,10 +85,17 @@ public class PanelMenu extends JPanel {
         // Agregar botones al centro
         panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
         
+        OperacionesBasicas operacionesBasicas = new OperacionesBasicas(cardLayout, contenedorDeCartas, panelBotones, titulo);
+        Vectores vectores = new Vectores(cardLayout, contenedorDeCartas, panelBotones, titulo);
+        Matrices matrices = new Matrices(cardLayout, contenedorDeCartas, panelBotones, titulo);
+        Ecuaciones ecuaciones = new Ecuaciones(cardLayout, contenedorDeCartas, panelBotones, titulo);
+        
+        contenedorDeCartas.add(operacionesBasicas, "operacionesBasicas");
+        contenedorDeCartas.add(vectores, "vectores");
+        contenedorDeCartas.add(matrices, "matrices");
+        contenedorDeCartas.add(ecuaciones, "ecuaciones");
         
         
-        add(panelBotones, BorderLayout.CENTER);        
-        add(contenedorDeCartas, BorderLayout.CENTER);
         
         JPanel panelCentral = new JPanel(new BorderLayout());
         panelCentral.setOpaque(false); // Para mantener fondo rojo si querés
