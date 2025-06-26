@@ -22,16 +22,19 @@ public class Matrices extends JPanel {
 	public Matrices(CardLayout cardLayout, JPanel contenedorDeCartas, JPanel panelBotones, JLabel titulo) {
 		
 		setLayout(new BorderLayout());
+		
+		JPanel centroLibre = new JPanel(null);
 
         JLabel tituloMatriz = new JLabel("MATRICES", SwingConstants.CENTER);
-        add(tituloMatriz, BorderLayout.CENTER);
+        tituloMatriz.setBounds(165, 1, 120, 40);
+        centroLibre.add(tituloMatriz);
 
         add(BotonVolver.crear(cardLayout, contenedorDeCartas), BorderLayout.SOUTH);
         
         JButton btnReg = new JButton("REGRESAR");
         btnReg.setBackground(new Color(255, 255, 255));
-		btnReg.setVerticalAlignment(SwingConstants.BOTTOM);
-		add(btnReg, BorderLayout.NORTH);
+        btnReg.setBounds(10, 11, 100, 20);
+		centroLibre.add(btnReg);
         btnReg.setMaximumSize(new Dimension(200, 30));
         
         btnReg.addActionListener(new ActionListener() {
@@ -42,6 +45,7 @@ public class Matrices extends JPanel {
                 titulo.setVisible(true);
             }
         });
+        add(centroLibre, BorderLayout.CENTER);
 	}
 
 }
