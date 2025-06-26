@@ -14,7 +14,21 @@
 git clone https://github.com/Julinza2007/calculadoraJava.git
 ```
 
-Para trabar en tu rama (O sea tu parte) tenes que hacer estos pasos:
+### Comandos básicos:
+Para guardar cambios:
+```bash
+git add .
+```
+```bash
+git commit -m "mensaje"
+```
+
+Cambiar de rama:
+```bash
+git checkout el_nombre_de_tu_rama
+```
+
+## Para trabajar en tu rama (O sea tu parte) tenes que hacer estos pasos:
 
 1) Traer tu rama.
 ```bash
@@ -30,6 +44,18 @@ git checkout el_nombre_de_tu_rama
    
 `(Inserte imagen de abrir Eclipse)`
 `(Inserte imagen de codear tu parte)`
+
+4) Una vez terminado, hacer estos comandos:
+
+```bash
+git add .
+```
+```bash
+git commit -m "mensaje"
+```
+```bash
+git push origin el_nombre_de_tu_rama
+```
 
 ---
 # `y recuerden:`
