@@ -21,7 +21,6 @@ public class Ecuaciones extends JPanel {
         tituloEcuaciones.setBounds(165, 1, 120, 40);
         centroLibre.add(tituloEcuaciones);
 
-        add(BotonVolver.crear(cardLayout, contenedorDeCartas), BorderLayout.SOUTH);
         
         JButton btnReg = new JButton("REGRESAR");
         btnReg.setBackground(new Color(255, 255, 255));

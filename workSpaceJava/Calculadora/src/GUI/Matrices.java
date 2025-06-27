@@ -13,9 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
 
 public class Matrices extends JPanel {
@@ -34,8 +32,6 @@ public class Matrices extends JPanel {
         JLabel tituloMatriz = new JLabel("MATRICES", SwingConstants.CENTER);
         tituloMatriz.setBounds(165, 1, 120, 40);
         centroLibre.add(tituloMatriz);
-
-        add(BotonVolver.crear(cardLayout, contenedorDeCartas), BorderLayout.SOUTH);
         
         JButton btnReg = new JButton("REGRESAR");
         btnReg.setBackground(new Color(255, 255, 255));

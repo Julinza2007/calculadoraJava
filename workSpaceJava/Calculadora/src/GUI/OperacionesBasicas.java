@@ -23,8 +23,6 @@ public class OperacionesBasicas extends JPanel {
         JLabel tituloOpeBas = new JLabel("OPERACIONES BASICAS", SwingConstants.CENTER);
         tituloOpeBas.setBounds(165, 1, 120, 40);
         centroLibre.add(tituloOpeBas);
-
-        add(BotonVolver.crear(cardLayout, contenedorDeCartas), BorderLayout.SOUTH);
         
         JButton btnReg = new JButton("REGRESAR");
         btnReg.setBackground(new Color(255, 255, 255));
