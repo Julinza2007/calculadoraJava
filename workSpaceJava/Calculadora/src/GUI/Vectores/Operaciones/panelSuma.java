@@ -1,5 +1,6 @@
 package GUI.Vectores.Operaciones;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -15,8 +16,6 @@ import javax.swing.JPanel;
 
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -27,11 +26,20 @@ public class panelSuma extends JPanel {
 	private JTextField[] camposVector1;
 	private JTextField[] camposVector2;
 	private JTextField[] camposResultado;
+	private double ansVector;
+	
+	
+	
+	private CardLayout cardLayout;
+	private JPanel contenedorDeCartas;
 
 	/**
 	 * Create the panel.
 	 */
-	public panelSuma() {
+	public panelSuma(CardLayout cardLayout, JPanel contenedorDeCartas) {
+		this.cardLayout = cardLayout;
+	    this.contenedorDeCartas = contenedorDeCartas;
+		
 	    // Configuración del layout y fondo
 	    setLayout(new MigLayout("", "[grow]", "[][][][][]"));
 	    setBackground(new Color(255, 255, 255));
@@ -62,13 +70,24 @@ public class panelSuma extends JPanel {
 	    			imprimirVectores(tamanio);	    		    			
 	    		}
 	    	}
-	    });  
+	    });
+	    
+	    
+	    
+	    JButton btnVolver = new JButton("Volver al Menú de Vectores");
+	    btnVolver.addActionListener(e -> cardLayout.show(contenedorDeCartas, "vectores"));
+	    add(btnVolver, "cell 0 4,alignx left");
+	    
+	    
+	    
 	    
 	}
 	
 	public JPanel imprimirVectores(int N) {
 	    if (panelVectores != null) {
 	        remove(panelVectores);
+	        revalidate();
+	        repaint();
 	    }
 
 	    panelVectores = new JPanel();
@@ -112,7 +131,7 @@ public class panelSuma extends JPanel {
 	    panelVectores.add(Box.createRigidArea(new Dimension(0, 10)));
 
 	    // Botón Sumar
-	    JButton btnSumar = new javax.swing.JButton("Sumar");
+	    JButton btnSumar = new JButton("Sumar");
 	    panelVectores.add(btnSumar);
 	    
 	    panelVectores.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -137,7 +156,7 @@ public class panelSuma extends JPanel {
 	    // Acción del botón
 	    btnSumar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	            int total = suma(camposVector1, camposVector2, camposResultado);
+	            ansVector = suma(camposVector1, camposVector2, camposResultado);
 	        }
 	    });
 
@@ -148,18 +167,18 @@ public class panelSuma extends JPanel {
 	    return panelVectores;
 	}
 	
-	public static int suma(JTextField[] vector1, JTextField[] vector2, JTextField[] resultado) {
-	    int totalSuma = 0;
+	public static double suma(JTextField[] vector1, JTextField[] vector2, JTextField[] resultado) {
+	    double totalSuma = 0;
 	    for (int i = 0; i < vector1.length; i++) {
 	        String texto1 = vector1[i].getText();
 	        String texto2 = vector2[i].getText();
 	        if (!texto1.matches("-?\\d+") || !texto2.matches("-?\\d+")) {
 	            resultado[i].setText("Err");
 	        } else {
-	            int v1 = Integer.parseInt(texto1);
-	            int v2 = Integer.parseInt(texto2);
-	            int suma = v1 + v2;
-	            resultado[i].setText(String.valueOf(suma));
+	            double v1 = Double.parseDouble(texto1);
+	            double v2 = Double.parseDouble(texto2);
+	            double suma = v1 + v2;
+	            resultado[i].setText("" + suma);
 	            totalSuma += suma;
 	        }
 	    }

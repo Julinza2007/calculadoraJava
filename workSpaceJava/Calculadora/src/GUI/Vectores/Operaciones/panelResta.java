@@ -1,5 +1,6 @@
 package GUI.Vectores.Operaciones;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -26,11 +27,19 @@ public class panelResta extends JPanel {
 	private JTextField[] camposVector1;
 	private JTextField[] camposVector2;
 	private JTextField[] camposResultado;
+	private double ansVector;
+	
+	private CardLayout cardLayout;
+	private JPanel contenedorDeCartas;
 	
 	/**
 	 * Create the panel.
 	 */
-	public panelResta() {
+	public panelResta(CardLayout cardLayout, JPanel contenedorDeCartas) {
+		
+			this.cardLayout = cardLayout;
+			this.contenedorDeCartas = contenedorDeCartas;
+					
 		    setLayout(new MigLayout("", "[grow]", "[][][][][]"));
 		    setBackground(new Color(255, 255, 255));
 
@@ -60,9 +69,17 @@ public class panelResta extends JPanel {
 		    	}
 		    });
 		    
+		    JButton btnVolver = new JButton("Volver al Menú de Vectores");
+		    btnVolver.addActionListener(e -> cardLayout.show(contenedorDeCartas, "vectores"));
+		    add(btnVolver, "cell 0 4,alignx left");
+		    
 		    
 		    
 		}
+	
+	
+	
+	
 	
 	public JPanel imprimirVectores(int N) {
 	    if (panelVectores != null) {
@@ -133,7 +150,7 @@ public class panelResta extends JPanel {
 	    // Acción del botón
 	    btnRestar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	            int total = resta(camposVector1, camposVector2, camposResultado);
+	            ansVector = resta(camposVector1, camposVector2, camposResultado);
 	        }
 	    });
 
@@ -144,18 +161,18 @@ public class panelResta extends JPanel {
 	    return panelVectores;
 	}
 	
-	public static int resta(JTextField[] vector1, JTextField[] vector2, JTextField[] resultado) {
-	    int totalResta = 0;
+	public static double resta(JTextField[] vector1, JTextField[] vector2, JTextField[] resultado) {
+	    double totalResta = 0;
 	    for (int i = 0; i < vector1.length; i++) {
 	        String texto1 = vector1[i].getText();
 	        String texto2 = vector2[i].getText();
 	        if (!texto1.matches("-?\\d+") || !texto2.matches("-?\\d+")) {
 	            resultado[i].setText("Err");
 	        } else {
-	            int v1 = Integer.parseInt(texto1);
-	            int v2 = Integer.parseInt(texto2);
-	            int resta = v1 - v2;
-	            resultado[i].setText(String.valueOf(resta));
+	            Double v1 = Double.parseDouble(texto1);
+	            Double v2 = Double.parseDouble(texto2);
+	            Double resta = v1 - v2;
+	            resultado[i].setText("" + resta);
 	            totalResta += resta;
 	        }
 	    }
