@@ -1,34 +1,20 @@
-package GUI;
-
+package GUI.Vectores;
+import GUI.Vectores.Operaciones.*;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.JInternalFrame;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import java.awt.FlowLayout;
-import net.miginfocom.swing.MigLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JLayeredPane;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SpringLayout;
-import java.awt.ComponentOrientation;
 import javax.swing.DebugGraphics;
 import java.awt.Font;
 import java.awt.Component;
-import java.awt.Rectangle;
 
 public class Vectores extends JPanel {
 
@@ -94,14 +80,21 @@ public class Vectores extends JPanel {
         btn3.setPreferredSize(buttonSize);
         btn4.setMaximumSize(buttonSize);
         btn4.setPreferredSize(buttonSize);
+               
+       panelSuma panelSuma = new panelSuma();
+       panelResta panelResta = new panelResta();
+       panelMultiPorEscalar panelMultiPorEscalar = new panelMultiPorEscalar();
+       panelProductoEscalar panelProductoEscalar = new panelProductoEscalar();
+       panelProductoVectorial panelProductoVectorial = new panelProductoVectorial();
         
-        
-        
-        
+        contenedorDeCartas.add(panelSuma, "Suma");
+        contenedorDeCartas.add(panelResta, "Resta");
+        contenedorDeCartas.add(panelMultiPorEscalar, "Multiplicacion por Escalar");
+        contenedorDeCartas.add(panelProductoEscalar, "Producto Escalar");
+        contenedorDeCartas.add(panelProductoVectorial, "Producto Vectorial");
         
         btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contenedorDeCartas.setVisible(false);
 				cardLayout.show(contenedorDeCartas, "Suma");
 				panelBotones.setVisible(false);
 				titulo.setVisible(false);
@@ -110,16 +103,14 @@ public class Vectores extends JPanel {
         
         btn1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-				contenedorDeCartas.setVisible(false);
-				cardLayout.show(contenedorDeCartas, "Resta");
-				panelBotones.setVisible(false);
-				titulo.setVisible(false);
+                cardLayout.show(contenedorDeCartas, "Resta");
+                panelBotones.setVisible(false);
+                titulo.setVisible(false);
 			}
         });
         
         btn2.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		contenedorDeCartas.setVisible(false);
         		cardLayout.show(contenedorDeCartas, "Multiplicacion por Escalar");
         		panelBotones.setVisible(false);
         		titulo.setVisible(false);
@@ -128,7 +119,6 @@ public class Vectores extends JPanel {
         
         btn3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contenedorDeCartas.setVisible(false);
 				cardLayout.show(contenedorDeCartas, "Producto Escalar");
 				panelBotones.setVisible(false);
 				titulo.setVisible(false);
@@ -138,17 +128,11 @@ public class Vectores extends JPanel {
         
         btn4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				contenedorDeCartas.setVisible(false);
 				cardLayout.show(contenedorDeCartas, "Producto Vectorial");
 				panelBotones.setVisible(false);
 				titulo.setVisible(false);
 			}
-		});
-        
-        
-        
-        
-        
+		});        
         
         
         JButton btnReg = new JButton("REGRESAR");

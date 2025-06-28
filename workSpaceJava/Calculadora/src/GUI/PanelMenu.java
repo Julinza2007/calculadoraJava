@@ -2,6 +2,8 @@ package GUI;
 
 import javax.swing.*;
 
+import GUI.Vectores.Vectores;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
