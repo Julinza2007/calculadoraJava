@@ -94,3 +94,6 @@ git push origin el_nombre_de_tu_rama
 ---
 # `y recuerden:`
 <img src="https://i.redd.it/xegl81xwl8w81.jpg" width="330px" height="300px">
+
+
+<img src="parrot.gif" width="300" height="250" />
