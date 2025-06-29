@@ -1,9 +1,12 @@
 package GUI.Vectores.Operaciones;
 import GUI.Ans;
 import GUI.Respuestas;
+
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -22,6 +25,7 @@ import java.awt.event.ActionEvent;
 
 public class panelSuma extends JPanel {
 	private static final long serialVersionUID = 1L;
+	private JPanel panelContenido;
 	private JTextField tamanioInput;
 	private JPanel panelVectores;
 	private JTextField[] camposVector1;
@@ -34,24 +38,23 @@ public class panelSuma extends JPanel {
 	 * Create the panel.
 	 */
 	public panelSuma(CardLayout cardLayout, JPanel contenedorDeCartas) {
-		// Configuración del layout y fondo
-	    setLayout(new MigLayout("", "[grow]", "[][][][][]"));
-	    setBackground(new Color(255, 255, 255));
-
-	    // Etiqueta principal de la suma de vectores
+		setLayout(new BorderLayout());
+        setBackground(new Color(210, 210, 210));
+	    
+		 panelContenido = new JPanel(new MigLayout("", "[grow]", "[][][][][]"));
+		 panelContenido.setOpaque(false);
+		 
 	    JLabel lblSuma = new JLabel("Suma de Vectores");
 	    lblSuma.setFont(new Font("Tahoma", Font.BOLD, 14));
-	    add(lblSuma, "cell 0 0,alignx center,aligny center");
+	    panelContenido.add(lblSuma, "cell 0 0,alignx center,aligny center");
 
-	    // Etiqueta para ingresar el tamaño de los vectores
 	    JLabel lblSuma1 = new JLabel("Ingrese el tamaño de los vectores a sumar:");
 	    lblSuma1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-	    add(lblSuma1, "flowx,cell 0 1,alignx center,aligny center");
+	    panelContenido.add(lblSuma1, "flowx,cell 0 1,alignx center,aligny center");
 
-	    // Campo de texto para ingresar el tamaño
 	    tamanioInput = new JTextField();
 	    tamanioInput.setColumns(10);
-	    add(tamanioInput, "cell 0 1");
+	    panelContenido.add(tamanioInput, "cell 0 1");
 	    
 	    tamanioInput.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
@@ -66,15 +69,16 @@ public class panelSuma extends JPanel {
 	    	}
 	    });
 	    
-	    
+	    JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    panelInferior.setOpaque(false);
 	    
 	    JButton btnVolver = new JButton("Volver al Menú de Vectores");
 	    btnVolver.addActionListener(e -> cardLayout.show(contenedorDeCartas, "vectores"));
-	    add(btnVolver, "cell 0 4,alignx left");
+	    panelInferior.add(btnVolver);
 	    
 	    
-	    
-	    
+	    add(panelContenido, BorderLayout.CENTER);
+	    add(panelInferior, BorderLayout.SOUTH);
 	    
 	}
 	
@@ -184,7 +188,7 @@ public class panelSuma extends JPanel {
 	    
 	    
 
-	    add(panelVectores, "cell 0 2, alignx center");
+	    panelContenido.add(panelVectores, "cell 0 2, alignx center");
 	    revalidate();
 	    repaint();
 

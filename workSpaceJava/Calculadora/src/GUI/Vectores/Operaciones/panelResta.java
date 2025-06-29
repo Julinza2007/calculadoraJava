@@ -1,8 +1,10 @@
 package GUI.Vectores.Operaciones;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -24,6 +26,7 @@ import net.miginfocom.swing.MigLayout;
 public class panelResta extends JPanel {
 	
 	private static final long serialVersionUID = 1L;
+	private JPanel panelContenido;
 	private JTextField tamanioInput;
 	private JPanel panelVectores;
 	private JTextField[] camposVector1;
@@ -36,21 +39,24 @@ public class panelResta extends JPanel {
 	 */
 	public panelResta(CardLayout cardLayout, JPanel contenedorDeCartas) {
 		
-			setLayout(new MigLayout("", "[grow]", "[][][][][]"));
-		    setBackground(new Color(255, 255, 255));
+			setLayout(new BorderLayout());
+	        setBackground(new Color(210, 210, 210));
+	    
+			panelContenido = new JPanel(new MigLayout("", "[grow]", "[][][][][]"));
+			panelContenido.setOpaque(false);
 
 		    JLabel lblResta = new JLabel("Resta de Vectores");
 		    lblResta.setFont(new Font("Tahoma", Font.BOLD, 14));
-		    add(lblResta, "cell 0 0,alignx center,aligny center");
+		    panelContenido.add(lblResta, "cell 0 0,alignx center,aligny center");
 
 		    JLabel lblResta1 = new JLabel("Ingrese el tamaño de los vectores a restar:");
 		    lblResta1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		    add(lblResta1, "cell 0 1,alignx center,aligny center");
+		    panelContenido.add(lblResta1, "cell 0 1,alignx center,aligny center");
 
 		    
 		    tamanioInput = new JTextField();
 		    tamanioInput.setColumns(10);
-		    add(tamanioInput, "cell 0 1");
+		    panelContenido.add(tamanioInput, "cell 0 1");
 		    
 		    tamanioInput.addActionListener(new ActionListener() {
 		    	public void actionPerformed(ActionEvent e) {
@@ -65,17 +71,17 @@ public class panelResta extends JPanel {
 		    	}
 		    });
 		    
+		    JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		    panelInferior.setOpaque(false);
+		    
 		    JButton btnVolver = new JButton("Volver al Menú de Vectores");
 		    btnVolver.addActionListener(e -> cardLayout.show(contenedorDeCartas, "vectores"));
-		    add(btnVolver, "cell 0 4,alignx left");
+		    panelInferior.add(btnVolver);
 		    
-		    
+		    add(panelContenido, BorderLayout.CENTER);
+		    add(panelInferior, BorderLayout.SOUTH);
 		    
 		}
-	
-	
-	
-	
 	
 	public JPanel imprimirVectores(int N) {
 	    if (panelVectores != null) {
@@ -103,10 +109,8 @@ public class panelResta extends JPanel {
 	    }
 	    panelVectores.add(row1);
 
-	    // Add vertical space
 	    panelVectores.add(Box.createRigidArea(new Dimension(0, 15)));
 
-	    // Second row: Label + Vector 2
 	    JPanel row2 = new JPanel(new GridLayout(1, N + 1, 5, 0));
 	    JLabel labelVector2 = new JLabel("Vector 2");
 	    labelVector2.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -123,12 +127,11 @@ public class panelResta extends JPanel {
 	    panelVectores.add(Box.createRigidArea(new Dimension(0, 15)));
 
 	    // Botón adadasda
-	    JButton btnRestar = new javax.swing.JButton("Restar");
+	    JButton btnRestar = new JButton("Restar");
 	    panelVectores.add(btnRestar);
 	    
 	    panelVectores.add(Box.createRigidArea(new Dimension(0, 15)));
 
-	    // Fila Resultado
 	    JPanel rowResultado = new JPanel(new GridLayout(1, N + 1, 5, 0));
 	    JLabel labelResultado = new JLabel("Resultado");
 	    labelResultado.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -176,7 +179,7 @@ public class panelResta extends JPanel {
 	    panelVectores.add(btnAns);
 	    
 
-	    add(panelVectores, "cell 0 2, alignx center");
+	    panelContenido.add(panelVectores, "cell 0 2, alignx center");
 	    revalidate();
 	    repaint();
 

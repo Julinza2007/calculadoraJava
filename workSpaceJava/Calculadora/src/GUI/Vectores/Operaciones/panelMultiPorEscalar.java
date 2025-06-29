@@ -1,8 +1,10 @@
 package GUI.Vectores.Operaciones;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -24,6 +26,7 @@ import net.miginfocom.swing.MigLayout;
 public class panelMultiPorEscalar extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private JPanel panelContenido;
 	private JTextField tamanioInput;
 	private JPanel panelVectores;
 	private JTextField[] camposVector;
@@ -33,20 +36,24 @@ public class panelMultiPorEscalar extends JPanel {
 	
 	public panelMultiPorEscalar(CardLayout cardLayout, JPanel contenedorDeCartas) {
 		
-		setLayout(new MigLayout("", "[grow]", "[][][][][][]"));
-	    setBackground(new Color(255, 255, 255));
-
+		setLayout(new BorderLayout());
+		setBackground(new Color(210, 210, 210));
+	    
+		 panelContenido = new JPanel(new MigLayout("", "[grow]", "[][][][][]"));
+		 panelContenido.setOpaque(false);
+		 
+		 
 	    JLabel lblMultiplicacionEscalar = new JLabel("Multiplicación por Escalar");
 	    lblMultiplicacionEscalar.setFont(new Font("Tahoma", Font.BOLD, 14));
-	    add(lblMultiplicacionEscalar, "cell 0 0,alignx center,aligny center");
+	    panelContenido.add(lblMultiplicacionEscalar, "cell 0 0,alignx center,aligny center");
 
 	    JLabel lblTamanio = new JLabel("Ingrese el tamaño del vector: ");
 	    lblTamanio.setFont(new Font("Tahoma", Font.PLAIN, 12));
-	    add(lblTamanio, "cell 0 1,alignx left,aligny center");
+	    panelContenido.add(lblTamanio, "cell 0 1,alignx left,aligny center");
 
 	    tamanioInput = new JTextField();
 	    tamanioInput.setColumns(10);
-	    add(tamanioInput, "cell 0 1,alignx right");
+	    panelContenido.add(tamanioInput, "cell 0 1,alignx right");
 
 	    tamanioInput.addActionListener(new ActionListener() {
 	    	public void actionPerformed(ActionEvent e) {
@@ -62,9 +69,16 @@ public class panelMultiPorEscalar extends JPanel {
 	    });
 	    
 	    
+	    JPanel panelInferior = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	    panelInferior.setOpaque(false);	    
+	    
 	    JButton btnVolver = new JButton("Volver al Menú de Vectores");
 	    btnVolver.addActionListener(e -> cardLayout.show(contenedorDeCartas, "vectores"));
-	    add(btnVolver, "cell 0 4,alignx left");
+	    panelInferior.add(btnVolver);
+	    
+	    
+	    add(panelContenido, BorderLayout.CENTER);
+	    add(panelInferior, BorderLayout.SOUTH);
 	    
 	    
 	}
@@ -162,7 +176,7 @@ public class panelMultiPorEscalar extends JPanel {
 	    
 	    
 
-	    add(panelVectores, "cell 0 5, alignx center");
+	    panelContenido.add(panelVectores, "cell 0 5, alignx center");
 	    revalidate();
 	    repaint();
 

@@ -16,16 +16,13 @@ import java.awt.event.ActionListener;
 
 public class PanelMenu extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private CardLayout cardLayout;
     private JPanel contenedorDeCartas;
 	
 	    public PanelMenu() {
 	    	setLayout(new BorderLayout());
-	 	    setBackground(new Color(255, 0, 0));
+	 	    setBackground(new Color(255, 99, 71));
 	 	    
 	 	   cardLayout = new CardLayout();
 
@@ -33,7 +30,7 @@ public class PanelMenu extends JPanel {
 	        contenedorDeCartas = new JPanel(cardLayout);
     	
     	JLabel titulo = new JLabel("Calculadora G3L");
-		titulo.setFont(new Font("Consolas", Font.BOLD, 18));
+		titulo.setFont(new Font("Consolas", Font.BOLD, 25));
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		titulo.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0)); // margen arriba y abajo
         add(titulo, BorderLayout.NORTH);        
@@ -72,7 +69,7 @@ public class PanelMenu extends JPanel {
         JButton btnEj4 = new JButton("Ecuaciones de 2X2 y 3X3");
         btnEj4.setFocusPainted(false);
         btnEj4.setFont(new Font("Consolas", Font.PLAIN, 12));
-        btnEj4.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btnEj4.setAlignmentX(Component.CENTER_ALIGNMENT);	
         btnEj4.setMaximumSize(new Dimension(200, 30));
         panelBotones.add(btnEj4);
 
@@ -92,7 +89,7 @@ public class PanelMenu extends JPanel {
         
         
         JPanel panelCentral = new JPanel(new BorderLayout());
-        panelCentral.setOpaque(false); // Para mantener fondo rojo si querés
+        panelCentral.setOpaque(false);
 
         panelCentral.add(panelBotones, BorderLayout.NORTH);
         panelCentral.add(contenedorDeCartas, BorderLayout.CENTER);
