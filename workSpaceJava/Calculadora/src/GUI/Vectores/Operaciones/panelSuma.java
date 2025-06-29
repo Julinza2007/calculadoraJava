@@ -1,5 +1,6 @@
 package GUI.Vectores.Operaciones;
-
+import GUI.Ans;
+import GUI.Respuestas;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -26,21 +27,14 @@ public class panelSuma extends JPanel {
 	private JTextField[] camposVector1;
 	private JTextField[] camposVector2;
 	private JTextField[] camposResultado;
-	private double ansVector;
+	private double[] ansVector;	
 	
 	
-	
-	private CardLayout cardLayout;
-	private JPanel contenedorDeCartas;
-
 	/**
 	 * Create the panel.
 	 */
 	public panelSuma(CardLayout cardLayout, JPanel contenedorDeCartas) {
-		this.cardLayout = cardLayout;
-	    this.contenedorDeCartas = contenedorDeCartas;
-		
-	    // Configuración del layout y fondo
+		// Configuración del layout y fondo
 	    setLayout(new MigLayout("", "[grow]", "[][][][][]"));
 	    setBackground(new Color(255, 255, 255));
 
@@ -77,6 +71,7 @@ public class panelSuma extends JPanel {
 	    JButton btnVolver = new JButton("Volver al Menú de Vectores");
 	    btnVolver.addActionListener(e -> cardLayout.show(contenedorDeCartas, "vectores"));
 	    add(btnVolver, "cell 0 4,alignx left");
+	    
 	    
 	    
 	    
@@ -154,11 +149,40 @@ public class panelSuma extends JPanel {
 
 
 	    // Acción del botón
+	    
+	    
+	    
+	    Ans btnAns = new Ans();
+	    if(Respuestas.obtenerVector() != null) {
+	    	btnAns.setEnabled(true);
+	    }
+	    else {
+	    	btnAns.setEnabled(false);
+	    }
+	    
 	    btnSumar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            ansVector = suma(camposVector1, camposVector2, camposResultado);
+	            Respuestas.guardarRespuestas(2, 0, ansVector, null);
+	            btnAns.setEnabled(true);
 	        }
 	    });
+	    
+	    btnAns.addActionListener(e -> {
+	        double[] ans = Respuestas.obtenerVector();
+	        if (ans != null && ans.length == camposVector1.length) {
+	            for (int i = 0; i < ans.length; i++) {
+	                camposVector1[i].setText("" + ans[i]);
+	            }
+	        }
+	    });
+	    
+	    
+	    panelVectores.add(Box.createRigidArea(new Dimension(0, 10)));
+
+	    panelVectores.add(btnAns);
+	    
+	    
 
 	    add(panelVectores, "cell 0 2, alignx center");
 	    revalidate();
@@ -167,22 +191,23 @@ public class panelSuma extends JPanel {
 	    return panelVectores;
 	}
 	
-	public static double suma(JTextField[] vector1, JTextField[] vector2, JTextField[] resultado) {
-	    double totalSuma = 0;
+	public static double[] suma(JTextField[] vector1, JTextField[] vector2, JTextField[] resultado) {
+	    double[] sumaVector = new double[vector1.length];
 	    for (int i = 0; i < vector1.length; i++) {
-	        String texto1 = vector1[i].getText();
-	        String texto2 = vector2[i].getText();
-	        if (!texto1.matches("-?\\d+") || !texto2.matches("-?\\d+")) {
+	        String texto1 = vector1[i].getText().replace(',', '.');
+	        String texto2 = vector2[i].getText().replace(',', '.');
+	        if (!texto1.matches("-?\\d*(\\.\\d+)?") || !texto2.matches("-?\\d*(\\.\\d+)?")) {
 	            resultado[i].setText("Err");
+	            sumaVector[i] = Double.NaN;
 	        } else {
 	            double v1 = Double.parseDouble(texto1);
 	            double v2 = Double.parseDouble(texto2);
 	            double suma = v1 + v2;
 	            resultado[i].setText("" + suma);
-	            totalSuma += suma;
+	            sumaVector[i] = suma;
 	        }
 	    }
-	    return totalSuma;
+	    return sumaVector;
 	}
 	
 }

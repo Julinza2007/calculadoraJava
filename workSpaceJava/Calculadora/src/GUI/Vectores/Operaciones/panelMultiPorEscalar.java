@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import GUI.Ans;
+import GUI.Respuestas;
 import net.miginfocom.swing.MigLayout;
 
 public class panelMultiPorEscalar extends JPanel {
@@ -29,14 +31,7 @@ public class panelMultiPorEscalar extends JPanel {
 	private double[] ansVector;
 	
 	
-	private CardLayout cardLayout;
-	private JPanel contenedorDeCartas;
-
 	public panelMultiPorEscalar(CardLayout cardLayout, JPanel contenedorDeCartas) {
-		
-		this.cardLayout = cardLayout;
-		this.contenedorDeCartas = contenedorDeCartas;
-		
 		
 		setLayout(new MigLayout("", "[grow]", "[][][][][][]"));
 	    setBackground(new Color(255, 255, 255));
@@ -131,14 +126,41 @@ public class panelMultiPorEscalar extends JPanel {
 	        rowResultado.add(camposResultado[i]);
 	    }
 	    panelVectores.add(rowResultado);
+	    
+	    Ans btnAns = new Ans();
+	    if(Respuestas.obtenerVector() != null) {
+	    	btnAns.setEnabled(true);
+	    }
+	    else {
+	    	btnAns.setEnabled(false);
+	    }
+	    
 
 	    // Acción del botón
 	    btnMulti.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	        	double escalar = Double.parseDouble(escalarInput.getText());
 	        	ansVector = multiPorEscalar(camposVector, escalar, camposResultado);
+	            Respuestas.guardarRespuestas(2, 0, ansVector, null);
+		    	btnAns.setEnabled(true);
 	        }
 	    });
+	    
+	    btnAns.addActionListener(e -> {
+	        double[] ans = Respuestas.obtenerVector();
+	        if (ans != null && ans.length == camposVector.length) {
+	            for (int i = 0; i < ans.length; i++) {
+	                camposVector[i].setText("" + ans[i]);
+	            }
+	        }
+	    });
+	    
+	    
+	    panelVectores.add(Box.createRigidArea(new Dimension(0, 10)));
+
+	    panelVectores.add(btnAns);
+	    
+	    
 
 	    add(panelVectores, "cell 0 5, alignx center");
 	    revalidate();

@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import GUI.Respuestas;
 import net.miginfocom.swing.MigLayout;
 
 public class panelProductoEscalar extends JPanel {
@@ -27,19 +28,11 @@ public class panelProductoEscalar extends JPanel {
     private JTextField[] camposVector1;
     private JTextField[] camposVector2;
     private JTextField resultadoCampo;
-
-    
-    private CardLayout cardLayout;
-	private JPanel contenedorDeCartas;
-    
+    private double ansBasico;
     
     public panelProductoEscalar(CardLayout cardLayout, JPanel contenedorDeCartas) {
     	
-    	this.cardLayout = cardLayout;
-		this.contenedorDeCartas = contenedorDeCartas;
-    	
-    	
-        setLayout(new MigLayout("", "[grow]", "[][][][][]"));
+    	setLayout(new MigLayout("", "[grow]", "[][][][][]"));
         setBackground(new Color(255, 255, 255));
 
         JLabel lblProductoEscalar = new JLabel("Producto Escalar");
@@ -68,7 +61,7 @@ public class panelProductoEscalar extends JPanel {
         
         JButton btnVolver = new JButton("Volver al Menú de Vectores");
 	    btnVolver.addActionListener(e -> cardLayout.show(contenedorDeCartas, "vectores"));
-	    add(btnVolver, "cell 0 4,alignx left");
+	    add(btnVolver, "cell 0 6,alignx left");
         
         
         
@@ -135,14 +128,15 @@ public class panelProductoEscalar extends JPanel {
         resultadoPanel.add(lblResultado);
         resultadoPanel.add(resultadoCampo);
         panelVectores.add(resultadoPanel);
-
+        
         btnProducto.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                double resultado = calcularProductoEscalar(camposVector1, camposVector2);
-                resultadoCampo.setText("" + resultado);
+                ansBasico = calcularProductoEscalar(camposVector1, camposVector2);
+                resultadoCampo.setText("" + ansBasico);
+                Respuestas.guardarRespuestas(2, ansBasico, null, null);
             }
         });
-
+        
         add(panelVectores, "cell 0 5, alignx center");
         revalidate();
         repaint();

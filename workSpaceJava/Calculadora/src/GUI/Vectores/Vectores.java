@@ -81,11 +81,11 @@ public class Vectores extends JPanel {
         btn4.setMaximumSize(buttonSize);
         btn4.setPreferredSize(buttonSize);
                
-       panelSuma panelSuma = new panelSuma();
-       panelResta panelResta = new panelResta();
-       panelMultiPorEscalar panelMultiPorEscalar = new panelMultiPorEscalar();
-       panelProductoEscalar panelProductoEscalar = new panelProductoEscalar();
-       panelProductoVectorial panelProductoVectorial = new panelProductoVectorial();
+       panelSuma panelSuma = new panelSuma(cardLayout, contenedorDeCartas);
+       panelResta panelResta = new panelResta(cardLayout, contenedorDeCartas);
+       panelMultiPorEscalar panelMultiPorEscalar = new panelMultiPorEscalar(cardLayout, contenedorDeCartas);
+       panelProductoEscalar panelProductoEscalar = new panelProductoEscalar(cardLayout, contenedorDeCartas);
+       panelProductoVectorial panelProductoVectorial = new panelProductoVectorial(cardLayout, contenedorDeCartas);
         
         contenedorDeCartas.add(panelSuma, "Suma");
         contenedorDeCartas.add(panelResta, "Resta");
@@ -128,6 +128,7 @@ public class Vectores extends JPanel {
         
         btn4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				panelProductoVectorial.imprimirVectores(); 
 				cardLayout.show(contenedorDeCartas, "Producto Vectorial");
 				panelBotones.setVisible(false);
 				titulo.setVisible(false);

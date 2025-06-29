@@ -16,6 +16,10 @@ import java.awt.event.ActionListener;
 
 public class PanelMenu extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private CardLayout cardLayout;
     private JPanel contenedorDeCartas;
 	
@@ -27,28 +31,16 @@ public class PanelMenu extends JPanel {
 
 	        contenedorDeCartas = new JPanel();
 	        contenedorDeCartas = new JPanel(cardLayout);
-
-	        
-	        
-	        
-	    	
-	        
-	    	
- 	    
-    	
     	
     	JLabel titulo = new JLabel("Calculadora G3L");
 		titulo.setFont(new Font("Consolas", Font.BOLD, 18));
 		titulo.setHorizontalAlignment(SwingConstants.CENTER);
 		titulo.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0)); // margen arriba y abajo
-        add(titulo, BorderLayout.NORTH);
-        
+        add(titulo, BorderLayout.NORTH);        
         
         JPanel panelBotones = new JPanel();
         panelBotones.setLayout(new BoxLayout(panelBotones, BoxLayout.Y_AXIS));
         panelBotones.setOpaque(false); // para que se vea el fondo rojo
-
-        
 		
         JButton btnEj1 = new JButton("Operaciones Básicas");
         btnEj1.setFocusPainted(false);
@@ -57,7 +49,7 @@ public class PanelMenu extends JPanel {
         btnEj1.setMaximumSize(new Dimension(200, 30));
         panelBotones.add(btnEj1);
         panelBotones.add(Box.createVerticalStrut(10)); // espacio
-
+        
         // Botón 2
         JButton btnEj2 = new JButton("Operaciones Vectoriales");
         btnEj2.setFocusPainted(false);

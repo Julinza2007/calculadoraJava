@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import GUI.Ans;
+import GUI.Respuestas;
 import net.miginfocom.swing.MigLayout;
 
 public class panelProductoVectorial extends JPanel {
@@ -25,18 +27,10 @@ public class panelProductoVectorial extends JPanel {
     private JTextField[] camposVector1;
     private JTextField[] camposVector2;
     private JTextField[] camposResultado;
+    private double[] ansVector;
     
-    
-    
-    private CardLayout cardLayout;
-	private JPanel contenedorDeCartas;
 
     public panelProductoVectorial(CardLayout cardLayout, JPanel contenedorDeCartas) {
-    	
-    	this.cardLayout = cardLayout;
-		this.contenedorDeCartas = contenedorDeCartas;
-    	
-    	
     	
         setLayout(new MigLayout("", "[grow]", "[][][][][]"));
         setBackground(new Color(255, 255, 255));
@@ -63,7 +57,7 @@ public class panelProductoVectorial extends JPanel {
             remove(panelVectores);
         }
 
-        int N = 3; // siempre dimensión 3 para producto vectorial
+        int N = 3; // siempre va a ser de tamaño 3 el producto vectorial
 
         panelVectores = new JPanel();
         panelVectores.setLayout(new BoxLayout(panelVectores, BoxLayout.Y_AXIS));
@@ -121,16 +115,45 @@ public class panelProductoVectorial extends JPanel {
             rowResultado.add(camposResultado[i]);
         }
         panelVectores.add(rowResultado);
+        
+        
+        Ans btnAns = new Ans();
+	    if(Respuestas.obtenerVector() != null) {
+	    	btnAns.setEnabled(true);
+	    }
+	    else {
+	    	btnAns.setEnabled(false);
+	    }
+        
 
         // Acción del botón
         btnCalcular.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                double[] resultado = productoVectorial(camposVector1, camposVector2);
-                for (int i = 0; i < resultado.length; i++) {
-                    camposResultado[i].setText("" + resultado[i]);
+                ansVector = productoVectorial(camposVector1, camposVector2);
+                for (int i = 0; i < ansVector.length; i++) {
+                    camposResultado[i].setText("" + ansVector[i]);
                 }
+                Respuestas.guardarRespuestas(2, 0, ansVector, null);
+    	    	btnAns.setEnabled(true);
             }
         });
+        
+        
+        btnAns.addActionListener(e -> {
+	        double[] ans = Respuestas.obtenerVector();
+	        if (ans != null && ans.length == camposVector1.length) {
+	            for (int i = 0; i < ans.length; i++) {
+	                camposVector1[i].setText("" + ans[i]);
+	            }
+	        }
+	    });
+	    
+	    
+	    panelVectores.add(Box.createRigidArea(new Dimension(0, 10)));
+
+	    panelVectores.add(btnAns);
+        
+        
 
         add(panelVectores, "cell 0 3, alignx center");
         revalidate();

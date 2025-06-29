@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import GUI.Ans;
+import GUI.Respuestas;
 import net.miginfocom.swing.MigLayout;
 
 public class panelResta extends JPanel {
@@ -27,20 +29,14 @@ public class panelResta extends JPanel {
 	private JTextField[] camposVector1;
 	private JTextField[] camposVector2;
 	private JTextField[] camposResultado;
-	private double ansVector;
-	
-	private CardLayout cardLayout;
-	private JPanel contenedorDeCartas;
+	private double[] ansVector;
 	
 	/**
 	 * Create the panel.
 	 */
 	public panelResta(CardLayout cardLayout, JPanel contenedorDeCartas) {
 		
-			this.cardLayout = cardLayout;
-			this.contenedorDeCartas = contenedorDeCartas;
-					
-		    setLayout(new MigLayout("", "[grow]", "[][][][][]"));
+			setLayout(new MigLayout("", "[grow]", "[][][][][]"));
 		    setBackground(new Color(255, 255, 255));
 
 		    JLabel lblResta = new JLabel("Resta de Vectores");
@@ -146,13 +142,39 @@ public class panelResta extends JPanel {
 	        rowResultado.add(camposResultado[i]);
 	    }
 	    panelVectores.add(rowResultado);
+	    
+	    
+	    Ans btnAns = new Ans();
+	    if(Respuestas.obtenerVector() != null) {
+	    	btnAns.setEnabled(true);
+	    }
+	    else {
+	    	btnAns.setEnabled(false);
+	    }
 
 	    // Acción del botón
 	    btnRestar.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	            ansVector = resta(camposVector1, camposVector2, camposResultado);
+	            Respuestas.guardarRespuestas(2, 0, ansVector, null);
+		    	btnAns.setEnabled(true);
 	        }
 	    });
+	    
+	    btnAns.addActionListener(e -> {
+	        double[] ans = Respuestas.obtenerVector();
+	        if (ans != null && ans.length == camposVector1.length) {
+	            for (int i = 0; i < ans.length; i++) {
+	                camposVector1[i].setText("" + ans[i]);
+	            }
+	        }
+	    });
+	    
+	    
+	    panelVectores.add(Box.createRigidArea(new Dimension(0, 10)));
+
+	    panelVectores.add(btnAns);
+	    
 
 	    add(panelVectores, "cell 0 2, alignx center");
 	    revalidate();
@@ -161,22 +183,23 @@ public class panelResta extends JPanel {
 	    return panelVectores;
 	}
 	
-	public static double resta(JTextField[] vector1, JTextField[] vector2, JTextField[] resultado) {
-	    double totalResta = 0;
+	public static double[] resta(JTextField[] vector1, JTextField[] vector2, JTextField[] resultado) {
+	    double[] restaVector = new double[vector1.length];
 	    for (int i = 0; i < vector1.length; i++) {
-	        String texto1 = vector1[i].getText();
-	        String texto2 = vector2[i].getText();
-	        if (!texto1.matches("-?\\d+") || !texto2.matches("-?\\d+")) {
+	        String texto1 = vector1[i].getText().replace(',', '.');
+	        String texto2 = vector2[i].getText().replace(',', '.');
+	        if (!texto1.matches("-?\\d*(\\.\\d+)?") || !texto2.matches("-?\\d*(\\.\\d+)?")) {
 	            resultado[i].setText("Err");
+	            restaVector[i] = Double.NaN;
 	        } else {
-	            Double v1 = Double.parseDouble(texto1);
-	            Double v2 = Double.parseDouble(texto2);
-	            Double resta = v1 - v2;
+	            double v1 = Double.parseDouble(texto1);
+	            double v2 = Double.parseDouble(texto2);
+	            double resta = v1 - v2;
 	            resultado[i].setText("" + resta);
-	            totalResta += resta;
+	            restaVector[i] = resta;
 	        }
 	    }
-	    return totalResta;
+	    return restaVector;
 	}
 	
 }
