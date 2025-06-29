@@ -97,3 +97,5 @@ git push origin el_nombre_de_tu_rama
 
 
 <img src="parrot.gif" width="300" height="250" />
+
+<img src= "gfreddy.gif" width="300" height="250" />
