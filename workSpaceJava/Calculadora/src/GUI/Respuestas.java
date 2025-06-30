@@ -18,14 +18,9 @@ public class Respuestas {
 		case 2: // Operaciones con vectores.
 			Respuestas.ansVector = ansVector;
 			break;
-/*A PARTIR DE ACÁ PONGAN USTEDES (elu y sebas) pq no me acuerdo muy bien como se pasaban los valores.*/	
 			
 		case 3: // Operaciones con matrices.
 			Respuestas.ansMatriz = ansMatriz;
-		break;
-		
-		case 4: // Ecuaciones
-			
 		break;
 		}
 	}
@@ -42,13 +37,5 @@ public class Respuestas {
 	public static double[][] obtenerMatriz() {
 		return ansMatriz;
 	}
-	
-	/*
-	 * AGREGAR LAS FUNCIONES QUE NECESITEN PARA OBTENER OTRAS ANS DE OTROS CALCULOS (ELU Y SEBAS)
-	 * */
-	
-	
-	
     
 }
-
