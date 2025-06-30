@@ -97,9 +97,6 @@ public class PanelMenu extends JPanel {
         add(panelCentral, BorderLayout.CENTER);
         
         contenedorDeCartas.setVisible(false);
-
-
-        
         
 		
         btnEj1.addActionListener(new ActionListener() {

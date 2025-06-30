@@ -15,8 +15,8 @@ public class Calculadora extends JFrame {
 
     public Calculadora() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(0, 0, 900, 500);
-        setMinimumSize(new Dimension(900, 500));
+        setBounds(0, 0, 900, 600);
+        setMinimumSize(new Dimension(900, 600));
         setLocationRelativeTo(null);
 
         panelPrincipal = new JPanel();

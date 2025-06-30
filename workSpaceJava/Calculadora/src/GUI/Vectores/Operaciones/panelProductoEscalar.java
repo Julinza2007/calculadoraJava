@@ -145,7 +145,7 @@ public class panelProductoEscalar extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 ansBasico = calcularProductoEscalar(camposVector1, camposVector2);
                 resultadoCampo.setText("" + ansBasico);
-                Respuestas.guardarRespuestas(2, ansBasico, null, null);
+                Respuestas.guardarRespuestas(1, ansBasico, null, null);
             }
         });
         
