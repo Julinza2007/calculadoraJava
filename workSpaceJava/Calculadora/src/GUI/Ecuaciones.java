@@ -3,7 +3,6 @@ package GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
 
 public class Ecuaciones extends JPanel {
 
@@ -61,16 +60,6 @@ public class Ecuaciones extends JPanel {
         add(panelCentral, BorderLayout.CENTER);
     }
 
-    private void guardarUltimoResultado(String texto) {
-        try {
-            FileWriter writer = new FileWriter("ultimo_resultado.txt", false);
-            writer.write(texto + "\n");
-            writer.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al guardar el resultado.");
-        }
-    }
-
     private void resolver2x2() {
         JTextField a1 = new JTextField(3);
         JTextField b1 = new JTextField(3);
@@ -115,7 +104,7 @@ public class Ecuaciones extends JPanel {
                 }
 
                 JOptionPane.showMessageDialog(this, resultado);
-                guardarUltimoResultado(resultado);
+                Respuestas.guardarEcuacion(resultado);
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Error: Verificá que ingresaste todos los datos correctamente.");
@@ -160,7 +149,7 @@ public class Ecuaciones extends JPanel {
 
                 String resultado = "Solución 3x3:\nx = " + m[0][3] + "\ny = " + m[1][3] + "\nz = " + m[2][3];
                 JOptionPane.showMessageDialog(this, resultado);
-                guardarUltimoResultado(resultado);
+                Respuestas.guardarEcuacion(resultado);
 
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Error: Verificá que ingresaste todos los datos correctamente.");
@@ -200,17 +189,11 @@ public class Ecuaciones extends JPanel {
     }
 
     private void mostrarUltimoResultado() {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("ultimo_resultado.txt"));
-            StringBuilder contenido = new StringBuilder();
-            String linea;
-            while ((linea = reader.readLine()) != null) {
-                contenido.append(linea).append("\n");
-            }
-            reader.close();
-            JOptionPane.showMessageDialog(this, contenido.toString(), "Ultimo resultado guardado", JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "No se encontro ningun resultado guardado.", "Error", JOptionPane.ERROR_MESSAGE);
+        String resultado = Respuestas.obtenerEcuacion();
+        if (resultado == null || resultado.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "No se encontró ningún resultado guardado.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, resultado, "Último resultado guardado", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }

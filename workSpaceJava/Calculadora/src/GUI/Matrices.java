@@ -12,20 +12,14 @@ import java.awt.event.ActionListener;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.JRadioButton;
 import javax.swing.JComboBox;
 import javax.swing.border.LineBorder;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.TitledBorder;
 
 public class Matrices extends JPanel {
 
@@ -209,17 +203,18 @@ public class Matrices extends JPanel {
         
         btnAns.setBackground(new Color(255, 128, 0));
         btnAns.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		if (ansMatriz != null) {
-        			int filas = Integer.parseInt(comboFilas1.getSelectedItem().toString());
-    				int columnas = Integer.parseInt(comboColumn1.getSelectedItem().toString());
-        			llenarMatrizDesdeArray(ansMatriz, camposMatriz1, filas, columnas);
-        		}
-        		else {
-        			JOptionPane.showMessageDialog(null, "No hay resultado guardado aún.");
-        		}
-        	}
+            public void actionPerformed(ActionEvent e) {
+                double[][] ans = Respuestas.obtenerMatriz();
+                int filas = Integer.parseInt(comboFilas1.getSelectedItem().toString());
+                int columnas = Integer.parseInt(comboColumn1.getSelectedItem().toString());
+                if (ans != null && ans.length == filas && ans[0].length == columnas) {
+                    llenarMatrizDesdeArray(ans, camposMatriz1, filas, columnas);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No hay resultado guardado o el tamaño no coincide.");
+                }
+            }
         });
+
         btnAns.setBounds(630, 273, 58, 23);
         centroLibre.add(btnAns);
         
@@ -240,24 +235,27 @@ public class Matrices extends JPanel {
 //               		int[][] num2 = new int[n][m];
 //                		int[][] resultado = new int[n][m];
                 		
-                		for(i=0; i < filas; i++){
-                			for(j=0; j < columnas; j++){
-                				int index = i * columnas + j;
-                				double num1 = Double.parseDouble(camposMatriz1.get(index).getText());  
-                				double num2 = Double.parseDouble(camposMatriz1.get(index).getText());  
-                				double resta = num1 - num2;
-                				
-                				ansMatriz[i][j] = resta;
-                				
-                				JTextField campoResultado = new JTextField(String.valueOf(resta));
-                				campoResultado.setEditable(false);
-                				campoResultado.setHorizontalAlignment(SwingConstants.CENTER);
-                				campoResultado.setBackground(new Color(224, 255, 224));
-                				panelResultado.add(campoResultado);
-                			}
-                		}
-                		panelResultado.revalidate();
-                        panelResultado.repaint();
+        				// Resta
+        				for(i=0; i < filas; i++){
+        				    for(j=0; j < columnas; j++){
+        				        int index = i * columnas + j;
+        				        double num1 = Double.parseDouble(camposMatriz1.get(index).getText().replace(',', '.'));
+        				        double num2 = Double.parseDouble(camposMatriz2.get(index).getText().replace(',', '.'));  
+        				        double resta = num1 - num2;
+
+        				        ansMatriz[i][j] = resta;
+
+        				        JTextField campoResultado = new JTextField(String.valueOf(resta));
+        				        campoResultado.setEditable(false);
+        				        campoResultado.setHorizontalAlignment(SwingConstants.CENTER);
+        				        campoResultado.setBackground(new Color(224, 255, 224));
+        				        panelResultado.add(campoResultado);
+        				    }
+        				}
+        				Respuestas.guardarRespuestas(3, 0, null, ansMatriz);
+        				panelResultado.revalidate();
+        				panelResultado.repaint();
+
                 		
         			
         		}
@@ -287,24 +285,26 @@ public class Matrices extends JPanel {
 //               		int[][] num2 = new int[n][m];
 //                		int[][] resultado = new int[n][m];
                 		
-                		for(i=0; i < filas; i++){
-                			for(j=0; j < columnas; j++){
-                				int index = i * columnas + j;
-                				double num1 = Double.parseDouble(camposMatriz1.get(index).getText());  
-                				double num2 = Double.parseDouble(camposMatriz1.get(index).getText());  
-                				double suma = num1 + num2;
-                				
-                				ansMatriz[i][j] = suma;
-                				
-                				JTextField campoResultado = new JTextField(String.valueOf(suma));
-                				campoResultado.setEditable(false);
-                				campoResultado.setHorizontalAlignment(SwingConstants.CENTER);
-                				campoResultado.setBackground(new Color(224, 255, 224));
-                				panelResultado.add(campoResultado);
-                			}
-                		}
-                		panelResultado.revalidate();
-                        panelResultado.repaint();
+        				for(i=0; i < filas; i++){
+        				    for(j=0; j < columnas; j++){
+        				        int index = i * columnas + j;
+        				        double num1 = Double.parseDouble(camposMatriz1.get(index).getText().replace(',', '.'));
+        				        double num2 = Double.parseDouble(camposMatriz2.get(index).getText().replace(',', '.'));
+        				        double suma = num1 + num2;
+
+        				        ansMatriz[i][j] = suma;
+
+        				        JTextField campoResultado = new JTextField(String.valueOf(suma));
+        				        campoResultado.setEditable(false);
+        				        campoResultado.setHorizontalAlignment(SwingConstants.CENTER);
+        				        campoResultado.setBackground(new Color(224, 255, 224));
+        				        panelResultado.add(campoResultado);
+        				    }
+        				}
+        				Respuestas.guardarRespuestas(3, 0, null, ansMatriz);
+        				panelResultado.revalidate();
+        				panelResultado.repaint();
+
         			
         		}
         	}
@@ -346,10 +346,10 @@ public class Matrices extends JPanel {
         				panelResultado.removeAll();
         				panelResultado.setLayout(new GridLayout(filas, columnas, 5, 5));
         				panelResultado.setVisible(true);
-        				int num_escalar = 0;
+        				
+        				double num_escalar = 0;
         				if(!escalar.getText().trim().isEmpty()) {
-        					num_escalar = Integer.parseInt(escalar.getText());
-        				}
+        					num_escalar = Double.parseDouble(escalar.getText());        				}
         				else {
         					JOptionPane.showMessageDialog(null, "ingrese un valor correcto para el escalar");
         				}
@@ -361,7 +361,7 @@ public class Matrices extends JPanel {
                 		for(i=0; i < filas; i++){
                 			for(j=0; j < columnas; j++){
                 				int index = i * columnas + j;
-                				double num1 = Double.parseDouble(camposMatriz1.get(index).getText());    
+                				double num1 = Double.parseDouble(camposMatriz1.get(index).getText().replace(',', '.'));
                 				double mul_escalar = num1 * num_escalar;
                 				
                 				ansMatriz[i][j] = mul_escalar;
@@ -373,6 +373,7 @@ public class Matrices extends JPanel {
                 				panelResultado.add(campoResultado);
                 			}
                 		}
+                		Respuestas.guardarRespuestas(3, 0, null, ansMatriz);
                 		panelResultado.revalidate();
                         panelResultado.repaint();                		        			        		
         	}
@@ -409,15 +410,14 @@ public class Matrices extends JPanel {
 	        				for(i=0; i < filas2; i++){
 	        					for(j=0; j < columnas2; j++){
 	        						int index2 = i * columnas2 + j;
-	        						num2[i][j] = Double.parseDouble(camposMatriz1.get(index2).getText());    
+	        						num2[i][j] = Double.parseDouble(camposMatriz2.get(index2).getText().replace(',', '.'));
 	        					}
 	        				}
 	        				
 	        				for(i=0; i < filas1; i++){
 	        					for(j=0; j < columnas1; j++){
 	        							int index1 = i * columnas1 + j;
-	        							num1[i][j] = Double.parseDouble(camposMatriz1.get(index1).getText());            			
-	                				
+	        							num1[i][j] = Double.parseDouble(camposMatriz1.get(index1).getText().replace(',', '.'));
 	                			}
 	                		}
 	        				
@@ -437,6 +437,9 @@ public class Matrices extends JPanel {
             						panelResultado.repaint();
 	        					}
 	        				}
+	        				
+	        				Respuestas.guardarRespuestas(3, 0, null, ansMatriz);
+
 	        		}
 	        		else {
 	        			JOptionPane.showMessageDialog(null, "no se pudo realizar la multiplicació ya que la columna de la matriz 1 no es igual a la fila de la matriz 2");
@@ -453,9 +456,7 @@ public class Matrices extends JPanel {
 	        	public void actionPerformed(ActionEvent e) {
 	        		int filas = Integer.parseInt(comboFilas1.getSelectedItem().toString());
 					int columnas = Integer.parseInt(comboColumn1.getSelectedItem().toString());
-					
-					ansMatriz = new double[filas][columnas];
-					
+										
 	        		if (columnas == filas) {
 	        				panelResultado.removeAll();
 	        				panelResultado.setLayout(new GridLayout(filas, columnas, 5, 5));
@@ -465,19 +466,16 @@ public class Matrices extends JPanel {
 	//               		int[][] num2 = new int[n][m];
 	//                		int[][] resultado = new int[n][m];
 	        				
-	        				int[][] matriz = new int[filas][columnas];
-	        				int resultado = 0;
+	        				double[][] matriz = new double[filas][columnas];	        				double resultado = 0;
 	        				int n = Integer.parseInt(comboFilas1.getSelectedItem().toString()); //o puede ser tambien con comboColumn, no cambia nada porque las filas y columnas son iguales
 	        				for (i=0;i < filas;i++) {
         						for (j=0;j < columnas;j++) {
         							int index = i * columnas + j;
-        							matriz[i][j] = Integer.parseInt(camposMatriz1.get(index).getText());
+        							matriz[i][j] = Double.parseDouble(camposMatriz1.get(index).getText().replace(',', '.'));
         						}
         					}
 	        				resultado = determinante(matriz, n);
-	        				
-	        				ansMatriz[i][j] = resultado;
-	        				
+	        					        				
 	        				JTextField campoResultado = new JTextField(String.valueOf(resultado));
 	        				campoResultado.setEditable(false);
 	        				campoResultado.setHorizontalAlignment(SwingConstants.CENTER);
@@ -486,7 +484,9 @@ public class Matrices extends JPanel {
 	        					
 	        				panelResultado.revalidate();
 	        			    panelResultado.repaint();
-	        				
+	        			    
+	        			    Respuestas.guardarRespuestas(1, resultado, null, null);
+
 	        		
 	        		}
 	        		
@@ -522,7 +522,7 @@ public class Matrices extends JPanel {
 						for (int i=0;i<n;i++) {
 							for (int j=0;j<n;j++) {
 								int index = i * n + j;
-								matriz[i][j] = Double.parseDouble(camposMatriz1.get(index).getText());
+								matriz[i][j] = Double.parseDouble(camposMatriz1.get(index).getText().replace(',', '.'));
 							}
 						}
 	        				double[][] matInversa = inversa(matriz);
@@ -543,6 +543,9 @@ public class Matrices extends JPanel {
 	        				}
 	        					panelResultado.revalidate();
 	        				    panelResultado.repaint();
+	        				    
+	        				    Respuestas.guardarRespuestas(3, 0, null, ansMatriz);
+
 	        			
 	        		}
 	        	}
@@ -578,17 +581,14 @@ public class Matrices extends JPanel {
 	        				for(i=0; i < filas2; i++){
 	        					for(j=0; j < columnas2; j++){
 	        						int index2 = i * columnas2 + j;
-	        						num2[i][j] = Double.parseDouble(camposMatriz2.get(index2).getText());
-
-
+	        						num2[i][j] = Double.parseDouble(camposMatriz2.get(index2).getText().replace(',', '.'));
 	        					}
 	        				}
 	        				
 	        				for(i=0; i < filas1; i++){
 	        					for(j=0; j < columnas1; j++){
 	        							int index1 = i * columnas1 + j;
-	        							num1[i][j] = Double.parseDouble(camposMatriz1.get(index1).getText());               			
-	                				
+	        							num1[i][j] = Double.parseDouble(camposMatriz1.get(index1).getText().replace(',', '.'));	                				
 	                			}
 	                		}
 	        				if (columnas2 == filas2) {
@@ -612,6 +612,10 @@ public class Matrices extends JPanel {
 	        						panelResultado.add(campoResultado);
             						panelResultado.revalidate();
             						panelResultado.repaint();
+            						
+            						Respuestas.guardarRespuestas(3, 0, null, ansMatriz);
+
+            						
 	        					}
 	        				}
 	        		}
@@ -635,7 +639,7 @@ public class Matrices extends JPanel {
 						for (int i=0;i<filas;i++) {
 							for (int j=0;j<columnas;j++) {
 								int index = i * columnas + j;
-								matriz[i][j] = Integer.parseInt(camposMatriz1.get(index).getText());
+								matriz[i][j] = Double.parseDouble(camposMatriz1.get(index).getText().replace(',', '.'));
 							}
 						}
 						for (int i=0;i<columnas;i++) {
@@ -661,6 +665,9 @@ public class Matrices extends JPanel {
 	        					panelResultado.revalidate();
 	        				    panelResultado.repaint();
 	        			
+	        				    Respuestas.guardarRespuestas(3, 0, null, ansMatriz);
+
+	        				    
 	        		
 	        	}
 	        });
@@ -677,8 +684,8 @@ public class Matrices extends JPanel {
         centroLibre.revalidate();
         centroLibre.repaint();
 	}
-	private static void submatriz(int[][] origen, int[][] destino, int n, int filas, int columnas) {
-	    int ni=0;
+	private static void submatriz(double[][] origen, double[][] destino, int n, int filas, int columnas) {
+	    int ni = 0;
 	    for (int i = 0; i < n; i++) {
 	        if (i == columnas) continue;
 	        int nj = 0;
@@ -690,31 +697,26 @@ public class Matrices extends JPanel {
 	        ni++;
 	    }
 	}
-	private static int determinante(int[][] matriz, int n) {
-		int resultado = 0;
-		
-		if (n==1) {
-			resultado = matriz[0][0];
-		}
-		if (n==2) {
-			resultado = matriz[0][0] * matriz[1][1] - matriz[0][1] * matriz[1][0];
-		}
-		
-		
-		int signo = 1;
-		
-		if (n >= 3) {
-			for(int column=0;column < n; column++) {
-				int[][] menor = new int[n-1][n-1];
-				submatriz(matriz, menor, n, 0, column);
-				signo *= -1;
-				resultado += signo * matriz[0][column] * determinante(menor, n - 1);
-			}
-			
-		}
-		return resultado;
-	
+
+	private static double determinante(double[][] matriz, int n) {
+	    double resultado = 0.0;
+
+	    if (n == 1) {
+	        resultado = matriz[0][0];
+	    } else if (n == 2) {
+	        resultado = matriz[0][0] * matriz[1][1] - matriz[0][1] * matriz[1][0];
+	    } else {
+	        int signo = 1;
+	        for (int column = 0; column < n; column++) {
+	            double[][] menor = new double[n - 1][n - 1];
+	            submatriz(matriz, menor, n, 0, column);
+	            resultado += signo * matriz[0][column] * determinante(menor, n - 1);
+	            signo *= -1;
+	        }
+	    }
+	    return resultado;
 	}
+
 	private static double[][] inversa(double[][] matriz) {
 		int n = matriz.length;
 		double[][] identidad = new double[n][n];
